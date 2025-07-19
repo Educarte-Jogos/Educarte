@@ -2,51 +2,79 @@ body {
   font-family: 'Comic Sans MS', cursive, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f0f8ff;
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
   color: #333;
 }
 
 header {
-  background: #4a90e2;
+  background: #6a11cb;
+  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
   color: white;
   padding: 20px;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
 header h1 {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .menu-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  padding: 40px;
+  gap: 30px;
+  padding: 50px 20px;
 }
 
 .menu-item {
-  background: #ffe082;
-  border-radius: 12px;
-  width: 250px;
-  height: 150px;
+  background: white;
+  border-radius: 20px;
+  width: 220px;
+  height: 220px;
   text-align: center;
   padding: 20px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-decoration: none;
   color: #333;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .menu-item:hover {
-  transform: translateY(-5px);
-  background: #ffd54f;
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.2);
 }
 
-main {
-  text-align: center;
-  padding: 20px;
-  font-size: 1.2rem;
+.menu-item::before {
+  content: '✨';
+  font-size: 3rem;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.7;
+}
+
+.menu-item:nth-child(1) {
+  background: #ffcccb;
+}
+
+.menu-item:nth-child(2) {
+  background: #c5f6c7;
+}
+
+.menu-item:nth-child(3) {
+  background: #fddb92;
+}
+
+.menu-item span {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 10px;
 }
