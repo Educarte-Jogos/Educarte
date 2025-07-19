@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educarte - Para Professores</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Para Professores 🧑‍🏫</h1>
+</header>
+
+<main>
+  <p>Conheça o intuito dos jogos e baixe materiais para impressão:</p>
+  <div class="menu-grid">
+    <a class="menu-item" href="#">Intuito dos jogos</a>
+    <a class="menu-item" href="#">Materiais para impressão</a>
+  </div>
+</main>
+
+</body>
+</html>
