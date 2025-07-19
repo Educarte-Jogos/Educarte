@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jogo Português - Fundamental 1 | Educarte</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* Ajustes específicos para o jogo */
+  body {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    color: #333;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+  header {
+    background: #d5652e;
+    text-align: center;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.4rem;
+  }
+  main {
+    max-width: 450px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .fase-info {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .palavra-incompleta {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+  }
+  .opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  .opcao-btn {
+    background: #ffd966;
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    flex: 1 1 45%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background 0.3s ease;
+  }
+  .opcao-btn:hover {
+    background: #f4b942;
+  }
+  .mensagem {
+    margin-top: 20px;
+    font-weight: bold;
+    height: 30px;
+  }
+  .botao-reiniciar {
+    margin-top: 30px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  .botao-reiniciar:hover {
+    background: #357ABD;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Jogo de Português - Fundamental 1</h1>
+</header>
+
+<main>
+  <div class="fase-info" id="fase-info">Fase 1 de 20</div>
+  <div class="palavra-incompleta" id="palavra-incompleta">Car__</div>
+  <div class="opcoes" id="opcoes">
+    <!-- Opções vão aqui dinamicamente -->
+  </div>
+  <div class="mensagem" id="mensagem"></div>
+  <button class="botao-reiniciar" id="botao-reiniciar" style="display:none;">Reiniciar Jogo</button>
+</main>
+
+<script>
+  // Dados das fases: palavra incompleta, opções, resposta correta
+  const fases = [
+    { palavra: 'Mor__', opcoes: ['ango','engo','ungo','ingo'], resposta: 'ango' },
+    { palavra: 'Car__', opcoes: ['ro','ra','ri','re'], resposta: 'ro' },
+    { palavra: 'Pan__', opcoes: ['ela','ila','ela','ina'], resposta: 'ela' },
+    { palavra: 'Fl__r', opcoes: ['or','ur','ar','er'], resposta: 'or' },
+    { palavra: 'Cach__', opcoes: ['orro','orro','irro','arro'], resposta: 'orro' },
+    { palavra: 'Bic__', opcoes: ['icleta','icleta','icleta','icleta'], resposta: 'icleta' },
+    { palavra: 'Am__r', opcoes: ['or','ar','er','ir'], resposta: 'or' },
+    { palavra: 'Es__la', opcoes: ['co','cu','ca','ce'], resposta: 'co' },
+    { palavra: 'J__go', opcoes: ['ogo','ugo','ogo','ogo'], resposta: 'ogo' },
+    { palavra: 'Le__a', opcoes: ['ite','ite','ite','ite'], resposta: 'ite' },
+    { palavra: 'Ca__o', opcoes: ['neta','neta','neta','neta'], resposta: 'neta' },
+    { palavra: 'P__ra', opcoes: ['eixe','eixe','eixe','eixe'], resposta: 'eixe' },
+    { palavra: 'Ba__o', opcoes: ['nho','nho','nho','nho'], resposta: 'nho' },
+    { palavra: 'To__a', opcoes: ['lha','lha','lha','lha'], resposta: 'lha' },
+    { palavra: 'Do__e', opcoes: ['ce','ce','ce','ce'], resposta: 'ce' },
+    { palavra: 'Fr__a', opcoes: ['uta','uta','uta','uta'], resposta: 'uta' },
+    { palavra: 'Pe__a', opcoes: ['ixe','ixe','ixe','ixe'], resposta: 'ixe' },
+    { palavra: 'So__e', opcoes: ['nho','nho','nho','nho'], resposta: 'nho' },
+    { palavra: 'Re__a', opcoes: ['ga','ga','ga','ga'], resposta: 'ga' },
+    { palavra: 'To__e', opcoes: ['rre','rre','rre','rre'], resposta: 'rre' }
+  ];
+
+  let faseAtual = 0;
+
+  const faseInfoEl = document.getElementById('fase-info');
+  const palavraEl = document.getElementById('palavra-incompleta');
+  const opcoesEl = document.getElementById('opcoes');
+  const mensagemEl = document.getElementById('mensagem');
+  const botaoReiniciar = document.getElementById('botao-reiniciar');
+
+  function carregarFase() {
+    mensagemEl.textContent = '';
+    const fase = fases[faseAtual];
+    faseInfoEl.textContent = `Fase ${faseAtual + 1} de ${fases.length}`;
+    palavraEl.textContent = fase.palavra;
+    opcoesEl.innerHTML = '';
+    fase.opcoes.forEach(opcao => {
+      const btn = document.createElement('button');
+      btn.className = 'opcao-btn';
+      btn.textContent = opcao;
+      btn.onclick = () => verificarResposta(opcao);
+      opcoesEl.appendChild(btn);
+    });
+  }
+
+  function verificarResposta(escolha) {
+    const resposta = fases[faseAtual].resposta;
+    if (escolha === resposta) {
+      faseAtual++;
+      if (faseAtual >= fases.length) {
+        mensagemEl.textContent = 'Parabéns! Você completou todas as fases!';
+        opcoesEl.innerHTML = '';
+        botaoReiniciar.style.display = 'inline-block';
+      } else {
+        carregarFase();
+      }
+    } else {
+      mensagemEl.textContent = 'Ops! Tente novamente.';
+    }
+  }
+
+  botaoReiniciar.onclick = () => {
+    faseAtual = 0;
+    botaoReiniciar.style.display = 'none';
+    carregarFase();
+  };
+
+  carregarFase();
+</script>
+
+</body>
+</html>
